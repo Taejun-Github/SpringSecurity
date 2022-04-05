@@ -65,6 +65,12 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional> <!-- Restart를 원하지 않을 경우 false -->
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-oauth2-client -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
+
 
 	</dependencies>
 

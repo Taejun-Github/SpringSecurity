@@ -1,4 +1,4 @@
-package com.cos.security1.auth;
+package com.cos.security1.config;
 
 // 시큐리티가 /login 주소 요청이 오면 낚아채서 로그인을 진행시킨다.
 // 로그인의 진행이 완료되면 시큐리티 세션을 만들어준다.
@@ -9,18 +9,41 @@ package com.cos.security1.auth;
 // Security Session => Authentication => UserDetails
 
 import com.cos.security1.model.User;
+import lombok.Data;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
-public class PrincipalDetails implements UserDetails {
+@Data
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private User user; // 콤포지션
+    private Map<String, Object> attributes;
 
+    // 일반 로그인시 사용하는 생성자
     public PrincipalDetails(User user) {
         this.user = user;
+    }
+
+    // OAuth 로그인시 사용하는 생성자
+    public PrincipalDetails(User user, Map<String, Object> attributes) {
+        this.user = user;
+        this.attributes = attributes;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    @Override
+    public String getName() {
+        return (String) attributes.get("sub");
     }
 
     // 해당 유저의 권한을 리턴하는 곳이다.

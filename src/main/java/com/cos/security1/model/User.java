@@ -1,8 +1,6 @@
 package com.cos.security1.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -12,6 +10,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +31,20 @@ public class User {
     @CreationTimestamp
     @Column(name = "CREATE_DATE")
     private Timestamp createDate;
+
+    @Column(name = "PROVIDER")
+    private String provider; // google, facebook 등
+    @Column(name = "PROVIDER_ID")
+    private String providerId;
+
+    @Builder
+    public User(String username, String password, String email, String role, Timestamp createDate, String provider, String providerId) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.createDate = createDate;
+        this.provider = provider;
+        this.providerId = providerId;
+    }
 }
